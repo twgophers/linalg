@@ -91,6 +91,19 @@ func TestRowAt_panicWhenTheRowDoesNotExists(t *testing.T) {
 	matrix.RowAt(position)
 }
 
+func TestRow_panicWhenTheMatrixIsWrong(t *testing.T) {
+	matrix := Matrix{Row{1.0}, Row{1.0, 1.0}}
+	column := 0
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("%v.RowAt(%v) did not panic.", matrix, column)
+		} else if !strings.HasPrefix(fmt.Sprint(r), "The dimentions are differents:") {
+			t.Errorf("%v.RowAt(%v): unexpected panic %q", matrix, column, r)
+		}
+	}()
+	matrix.RowAt(column)
+}
+
 func TestColumnAt(t *testing.T) {
 	cases := []struct {
 		matrix Matrix
@@ -115,6 +128,19 @@ func TestColumnAt_panicWhenTheColumnDoesNotExist(t *testing.T) {
 		if r := recover(); r == nil {
 			t.Errorf("%v.ColumnAt(%v) did not panic.", matrix, column)
 		} else if !strings.HasPrefix(fmt.Sprint(r), "Does not exist column in position") {
+			t.Errorf("%v.ColumnAt(%v): unexpected panic %q", matrix, column, r)
+		}
+	}()
+	matrix.ColumnAt(column)
+}
+
+func TestColumn_panicWhenTheMatrixIsWrong(t *testing.T) {
+	matrix := Matrix{Row{1.0}, Row{1.0, 1.0}}
+	column := 0
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("%v.ColumnAt(%v) did not panic.", matrix, column)
+		} else if !strings.HasPrefix(fmt.Sprint(r), "The dimentions are differents:") {
 			t.Errorf("%v.ColumnAt(%v): unexpected panic %q", matrix, column, r)
 		}
 	}()

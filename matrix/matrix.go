@@ -10,6 +10,11 @@ type Matrix []Row
 
 //Shape Return the number of lines and columns
 func (matrix Matrix) Shape() (int, int) {
+	matrix.validate()
+	return len(matrix), len(matrix[0])
+}
+
+func (matrix Matrix) validate() {
 	colSize := len(matrix[0])
 	for _, row := range matrix {
 		if colSize != len(row) {
@@ -17,11 +22,11 @@ func (matrix Matrix) Shape() (int, int) {
 				colSize, len(row)))
 		}
 	}
-	return len(matrix), len(matrix[0])
 }
 
 //RowAt return a row in positio i
 func (matrix Matrix) RowAt(i int) Row {
+	matrix.validate()
 	if i > len(matrix) {
 		panic(fmt.Sprintf("Does not exist row in position %d", i))
 	}
@@ -30,7 +35,7 @@ func (matrix Matrix) RowAt(i int) Row {
 
 //ColumnAt column in the position
 func (matrix Matrix) ColumnAt(col int) []float64 {
-
+	matrix.validate()
 	column := make([]float64, len(matrix))
 	for i, row := range matrix {
 		if col > len(row) {
