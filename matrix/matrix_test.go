@@ -146,3 +146,33 @@ func TestColumn_panicWhenTheMatrixIsWrong(t *testing.T) {
 	}()
 	matrix.ColumnAt(column)
 }
+
+func TestMakeMatrixDiagonal(t *testing.T) {
+	cases := []struct {
+		numRows int
+		numCols int
+		want    Matrix
+	}{
+		{2, 2, Matrix{Row{1.0, 0.0}, Row{0.0, 1.0}}},
+		{3, 3, Matrix{Row{1.0, 0.0, 0.0}, Row{0.0, 1.0, 0.0}, Row{0.0, 0.0, 1.0}}},
+	}
+	for _, c := range cases {
+		got := MakeMatrixDiagonal(c.numRows, c.numCols)
+		if !reflect.DeepEqual(got, c.want) {
+			t.Errorf("MakeMatrixDiagonal(%v, %v) want: %v; got: %v",
+				c.numRows, c.numCols, c.want, got)
+		}
+	}
+}
+
+func TestMakeMatrixDiagonal_panicWhenNumRowAndNumColsAreDifferents(t *testing.T) {
+	numRows, numCols := 2, 3
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("MakeMatrixDiagonal(%v, %v) did not panic.", numRows, numCols)
+		} else if !strings.HasPrefix(fmt.Sprint(r), "The dimentions are differents:") {
+			t.Errorf("MakeMatrixDiagonal(%v, %v): unexpected panic %q", numRows, numCols, r)
+		}
+	}()
+	MakeMatrixDiagonal(numRows, numCols)
+}

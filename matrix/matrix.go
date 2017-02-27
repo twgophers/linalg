@@ -45,3 +45,30 @@ func (matrix Matrix) ColumnAt(col int) []float64 {
 	}
 	return column
 }
+
+type operator func(i, j int) float64
+
+func makeMatrix(op operator, numRows, numCols int) Matrix {
+	matrix := make(Matrix, numRows)
+	for i := 0; i < numRows; i++ {
+		matrix[i] = make(Row, numCols)
+		for j := 0; j < numCols; j++ {
+			matrix[i][j] = op(i, j)
+		}
+	}
+	return matrix
+}
+
+//MakeMatrixDiagonal create a diagonal Matrix
+func MakeMatrixDiagonal(numRows, numCols int) Matrix {
+	if numRows != numCols {
+		panic(fmt.Sprintf("The dimentions are differents: %v, %v", numRows, numCols))
+	}
+	return makeMatrix(
+		func(i, j int) float64 {
+			if i == j {
+				return 1.0
+			}
+			return 0.0
+		}, numRows, numCols)
+}
