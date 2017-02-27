@@ -5,8 +5,13 @@ import "fmt"
 //Row in a matrix
 type Row []float64
 
+//Col in a matrix
+type Col []float64
+
 //Matrix Represents a matrix
 type Matrix []Row
+
+type operator func(i, j int) float64
 
 //Shape Return the number of lines and columns
 func (matrix Matrix) Shape() (int, int) {
@@ -34,9 +39,9 @@ func (matrix Matrix) RowAt(i int) Row {
 }
 
 //ColumnAt column in the position
-func (matrix Matrix) ColumnAt(col int) []float64 {
+func (matrix Matrix) ColumnAt(col int) Col {
 	matrix.validate()
-	column := make([]float64, len(matrix))
+	column := make(Col, len(matrix))
 	for i, row := range matrix {
 		if col > len(row) {
 			panic(fmt.Sprintf("Does not exist column in position %d", col))
@@ -45,8 +50,6 @@ func (matrix Matrix) ColumnAt(col int) []float64 {
 	}
 	return column
 }
-
-type operator func(i, j int) float64
 
 func makeMatrix(op operator, numRows, numCols int) Matrix {
 	matrix := make(Matrix, numRows)
