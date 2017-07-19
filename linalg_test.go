@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/rpinheiroalmeida/collections"
+	"github.com/twgophers/collections"
 )
 
 func TestAdd(t *testing.T) {

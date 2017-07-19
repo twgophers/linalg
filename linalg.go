@@ -3,7 +3,7 @@ package linalg
 import (
 	"math"
 
-	"github.com/rpinheiroalmeida/collections"
+	"github.com/twgophers/collections"
 )
 
 //Add subtracts two collections.Vectors element wise
