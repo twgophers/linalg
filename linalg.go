@@ -8,11 +8,11 @@ import (
 
 //Add subtracts two collections.Vectors element wise
 func Add(x, y collections.Vector) collections.Vector {
-	tuples := collections.Zip(x, y)
+	pairs := collections.Zip(x, y)
 
-	result := make(collections.Vector, len(tuples))
+	result := make(collections.Vector, len(pairs))
 
-	for i, value := range tuples {
+	for i, value := range pairs {
 		result[i] = value.A + value.B
 	}
 	return result
@@ -20,20 +20,20 @@ func Add(x, y collections.Vector) collections.Vector {
 
 //Subtract subtracts two collections.collections.Vectors elementwise
 func Subtract(x, y collections.Vector) collections.Vector {
-	tuples := collections.Zip(x, y)
+	pairs := collections.Zip(x, y)
 
-	result := make(collections.Vector, len(tuples))
+	result := make(collections.Vector, len(pairs))
 
-	for i, value := range tuples {
+	for i, value := range pairs {
 		result[i] = value.A - value.B
 	}
 	return result
 }
 
 func Dot(x, y collections.Vector) float64 {
-	tuples := collections.Zip(x, y)
+	pairs := collections.Zip(x, y)
 	var sum float64
-	for _, tuple := range tuples {
+	for _, tuple := range pairs {
 		sum += tuple.A * tuple.B
 	}
 	return sum
